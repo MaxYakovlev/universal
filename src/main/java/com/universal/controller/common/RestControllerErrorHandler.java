@@ -40,4 +40,10 @@ public class RestControllerErrorHandler {
                 .status(exception.getHttpStatus())
                 .body(new ErrorDto(exception.getMessage()));
     }
+
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity handleThrowableRuntimeException(Throwable exception) {
+        log.error(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorDto("Ошибка сервера."));
+    }
 }

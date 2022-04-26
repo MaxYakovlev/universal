@@ -1,5 +1,6 @@
 package com.universal.controller;
 
+import com.universal.model.dto.planet.AddLordToPlanetDto;
 import com.universal.model.dto.planet.CreatePlanetDto;
 import com.universal.model.dto.planet.PlanetDto;
 import com.universal.model.entity.Planet;
@@ -28,5 +29,11 @@ public class PlanetController {
     public HttpStatus deletePlanet(@PathVariable Long id){
         planetService.delete(id);
         return HttpStatus.ACCEPTED;
+    }
+
+    @PutMapping("/{id}/lord")
+    public HttpStatus addLordToPlanet(@PathVariable Long id, @Valid @RequestBody AddLordToPlanetDto addLordToPlanetDto){
+        planetService.addLordToPlanet(id, addLordToPlanetDto.getId());
+        return HttpStatus.NO_CONTENT;
     }
 }

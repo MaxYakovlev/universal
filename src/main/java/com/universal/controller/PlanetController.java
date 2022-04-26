@@ -6,10 +6,8 @@ import com.universal.model.entity.Planet;
 import com.universal.model.mapping.PlanetMapper;
 import com.universal.service.planet.PlanetService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -24,5 +22,11 @@ public class PlanetController {
     public PlanetDto createPlanet(@Valid @RequestBody CreatePlanetDto createPlanetDto){
         Planet planet = planetMapper.dtoToModel(createPlanetDto);
         return planetMapper.modelToDto(planetService.add(planet));
+    }
+
+    @DeleteMapping("/{id}")
+    public HttpStatus deletePlanet(@PathVariable Long id){
+        planetService.delete(id);
+        return HttpStatus.ACCEPTED;
     }
 }

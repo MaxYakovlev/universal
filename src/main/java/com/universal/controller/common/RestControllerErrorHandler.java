@@ -1,7 +1,10 @@
 package com.universal.controller.common;
 
+import com.universal.exception.AccessRuntimeException;
+import com.universal.model.dto.error.ErrorDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,5 +31,13 @@ public class RestControllerErrorHandler {
         });
 
         return errors;
+    }
+
+    @ExceptionHandler(AccessRuntimeException.class)
+    public ResponseEntity handleAccessRuntimeException(AccessRuntimeException exception) {
+        log.error(exception.getMessage());
+        return ResponseEntity
+                .status(exception.getHttpStatus())
+                .body(new ErrorDto(exception.getMessage()));
     }
 }

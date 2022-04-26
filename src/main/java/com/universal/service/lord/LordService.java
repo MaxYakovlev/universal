@@ -7,4 +7,5 @@ import java.util.List;
 public interface LordService {
     Lord add(Lord lord);
     List<Lord> findTop10Youngest();
+    List<Lord> findWithoutPlanets();
 }

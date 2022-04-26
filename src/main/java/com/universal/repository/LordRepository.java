@@ -11,11 +11,21 @@ import java.util.Optional;
 @Repository
 public interface LordRepository extends JpaRepository<Lord, Long> {
     @Query(value = """
-    SELECT * FROM lord AS l
-    LEFT JOIN planet AS p
-    ON l.id = p.lord_id
-    ORDER BY l.age ASC
-    LIMIT 10;
+        SELECT * 
+        FROM lord AS l
+        LEFT JOIN planet AS p
+        ON l.id = p.lord_id
+        ORDER BY l.age ASC
+        LIMIT 10;
     """, nativeQuery = true)
     Optional<List<Lord>> findTop10Youngest();
+
+    @Query(value = """
+        SELECT l.id, l.name, l.age
+        FROM lord AS l
+        LEFT JOIN planet AS p
+        ON l.id = p.lord_id
+        WHERE p.lord_id IS NULL
+    """, nativeQuery = true)
+    Optional<List<Lord>> findWithoutPlanets();
 }

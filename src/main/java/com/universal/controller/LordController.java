@@ -28,4 +28,9 @@ public class LordController {
     public List<LordDto> findTop10Youngest(){
         return lordMapper.modelToDto(lordService.findTop10Youngest());
     }
+
+    @GetMapping("/without-planets")
+    public List<LordDto> findWithoutPlanets(){
+        return lordMapper.modelToDto(lordService.findWithoutPlanets());
+    }
 }

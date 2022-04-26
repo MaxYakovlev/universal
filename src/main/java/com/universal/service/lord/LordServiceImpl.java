@@ -24,4 +24,10 @@ public class LordServiceImpl implements LordService{
         return lordRepository.findTop10Youngest()
                 .orElseThrow(() -> new AccessRuntimeException("Повелители не найдены", HttpStatus.NOT_FOUND));
     }
+
+    @Override
+    public List<Lord> findWithoutPlanets() {
+        return lordRepository.findWithoutPlanets()
+                .orElseThrow(() -> new AccessRuntimeException("Повелители не найдены", HttpStatus.NOT_FOUND));
+    }
 }

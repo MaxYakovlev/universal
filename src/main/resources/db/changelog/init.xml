@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1650993464245-1" author="YMS21">
+        <createTable tableName="lord">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_lord"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="age" type="INT"/>
+        </createTable>
+        <createTable tableName="planet">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_planet"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="lord_id" type="BIGINT"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="lord"/>
+        </rollback>
+        <rollback>
+            <dropTable tableName="planet"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="1650993464245-3" author="YMS21">
+        <addForeignKeyConstraint baseColumnNames="lord_id" baseTableName="planet" constraintName="FK_PLANET_ON_LORD"
+                                 referencedColumnNames="id" referencedTableName="lord"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="planet" constraintName="FK_PLANET_ON_LORD"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

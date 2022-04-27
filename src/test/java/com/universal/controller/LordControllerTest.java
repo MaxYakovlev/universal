@@ -1,5 +1,6 @@
 package com.universal.controller;
 
+import com.universal.common.PostgresTestContainer;
 import com.universal.model.dto.lord.CreateLordDto;
 import com.universal.model.dto.lord.LordDto;
 import com.universal.model.entity.Lord;
@@ -34,9 +35,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Testcontainers
-@SpringBootTest
-public class LordControllerTest {
+public class LordControllerTest extends PostgresTestContainer {
     @Autowired private LordController lordController;
     @Autowired private LordRepository lordRepository;
     @Autowired private PlanetRepository planetRepository;
@@ -44,19 +43,6 @@ public class LordControllerTest {
     @Autowired private LordMapper lordMapper;
     private MockMvc mockMvc;
     private ObjectMapper objectMapper = new ObjectMapper();
-
-    @Container
-    public static PostgreSQLContainer container = new PostgreSQLContainer()
-            .withUsername("postgres")
-            .withPassword("root")
-            .withDatabaseName("universal_db");
-
-    @DynamicPropertySource
-    static void properties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", container::getJdbcUrl);
-        registry.add("spring.datasource.password", container::getPassword);
-        registry.add("spring.datasource.username", container::getUsername);
-    }
 
     @BeforeEach
     public void clear(){

@@ -30,11 +30,11 @@ public class PlanetServiceImpl implements PlanetService{
 
     @Override
     public void addLordToPlanet(Long planetId, Long lordId) {
-        Lord lord = lordRepository.findById(lordId)
-                .orElseThrow(() -> new AccessRuntimeException("Повелитель не найден.", HttpStatus.NOT_FOUND));
-
         Planet planet = planetRepository.findById(planetId)
                 .orElseThrow(() -> new AccessRuntimeException("Планета не найдена.", HttpStatus.NOT_FOUND));
+
+        Lord lord = lordRepository.findById(lordId)
+                .orElseThrow(() -> new AccessRuntimeException("Повелитель не найден.", HttpStatus.NOT_FOUND));
 
         planet.setLord(lord);
         planetRepository.save(planet);
